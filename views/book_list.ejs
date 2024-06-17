@@ -1,12 +1,12 @@
 <%- include('./head') %>
 <h1><%= title %></h1>
 <ul>
-<% if(book_list.length){ book_list.forEach(function(book){ %>
-    <li>
-        <a href=<%= book.url%>><%= book.title%> </a> (<%= book.author.name%>)
-    </li>
-<% })} else{ %>
-    <p>No books</p>
-    <% } %>
+  <% if(book_list.length){ book_list.forEach(function(book){ %>
+  <li>
+    <a href=<%= book.url%>><%= book.title%> </a> (<%= book.author.name%>)
+  </li>
+  <% })} else{ %>
+  <p>No books</p>
+  <% } %>
 </ul>
 <%- include('./foot') %>
