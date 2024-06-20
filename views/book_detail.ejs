@@ -25,8 +25,8 @@
       
           <% if (instance.status != 'Available'){ %>
           <span> Due: <%= instance.due_back_formatted %></span>
-          <p><strong>Id:</strong> <a href=<%= instance.url%>> <%= instance._id %></a></p>
           <% }%>
+          <p><strong>Id:</strong> <a href=<%= instance.url%>> <%= instance._id %></a></p>
         <% }) %>
 
 </div>
