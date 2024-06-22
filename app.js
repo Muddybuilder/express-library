@@ -1,4 +1,7 @@
 require("dotenv").config();
+const compression = require("compression");
+const helmet = require("helmet");
+
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -10,6 +13,23 @@ var usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog"); //Import routes for "catalog" area of site
 
 var app = express();
+
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -24,6 +44,7 @@ async function main() {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(compression());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
